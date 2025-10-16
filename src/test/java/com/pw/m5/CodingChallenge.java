@@ -25,19 +25,19 @@ public class CodingChallenge {
         var textarea = page.locator("#textarea");
 
         // check the checkbox
+        checkbox.check();
+
         // fill in text area
-
-
+        textarea.fill(message);
 
         // click "Save Input"
-
-
+        page.getByRole(BUTTON, new Page.GetByRoleOptions().setName("Save Input")).click();
 
         // reload
-
-
+        page.reload();
 
         // assert that the checkbox remains checked and textarea filled in
-
+        assertThat(checkbox).isChecked();
+        assertThat(checkbox).hasValue(message);
     }
 }
