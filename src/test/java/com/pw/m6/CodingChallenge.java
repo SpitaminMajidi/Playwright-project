@@ -9,6 +9,7 @@ import java.util.List;
 
 import static com.microsoft.playwright.options.AriaRole.BUTTON;
 import static com.pw.Constants.HOME_WEB;
+import static com.pw.Constants.NEW_URL;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @UsePlaywright
@@ -17,21 +18,18 @@ public class CodingChallenge {
     @Test
     // Capture all uncaught errors (exceptions)
     void codingChallenge(Page page) {
-
-        page.navigate(HOME_WEB);
+        page.navigate(NEW_URL);
 
         // 1) create a list
-
-
+        List<String> errorList = new ArrayList<>();
 
         // 2) Create the handler that adds errors to a list
-
-
-
+        page.onPageError(error -> {
+            errorList.add(error);
+        });
         page.getByRole(BUTTON, new Page.GetByRoleOptions().setName("Register")).click();
 
-
         // 3)  if list not empty - fail test (use plain JUnit assertion)
-
+        assertTrue(errorList.isEmpty(), "Expected list to be empty but it contains errors: " + errorList);
     }
 }
